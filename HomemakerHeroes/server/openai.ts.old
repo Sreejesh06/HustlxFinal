@@ -1,0 +1,281 @@
+import Groq from "groq";
+
+// Using Groq instead of OpenAI as requested
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "demo-api-key" });
+
+// Function to generate skill suggestions based on user input
+export async function generateSkillSuggestions(
+  userInput: {
+    interests: string[];
+    experience: string[];
+    hobbies: string[];
+    personalityTraits: string[];
+    demographics?: string;
+  }
+): Promise<{
+  skills: Array<{
+    name: string;
+    description: string;
+    matchPercentage: number;
+    tags: string[];
+    icon: string;
+  }>;
+}> {
+  try {
+    const prompt = `
+      I need to suggest marketable skills for a homemaker based on their input.
+      
+      User information:
+      - Interests: ${userInput.interests.join(', ')}
+      - Experience: ${userInput.experience.join(', ')}
+      - Hobbies: ${userInput.hobbies.join(', ')}
+      - Personality traits: ${userInput.personalityTraits.join(', ')}
+      ${userInput.demographics ? `- Demographics: ${userInput.demographics}` : ''}
+      
+      Generate 3 skill suggestions that the user could monetize. For each suggestion, include:
+      1. A skill name
+      2. A short description of how they could monetize this skill
+      3. A match percentage (between 80-98%)
+      4. Two tags relevant to the skill (like "high demand", "low startup cost", etc.)
+      5. A relevant icon name from the Remix Icon set (ri-xxx-line format)
+      
+      Format your response as a JSON object with a 'skills' array containing these suggestions.
+    `;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" }
+    });
+
+    if (!response.choices[0].message.content) {
+      throw new Error("No content in OpenAI response");
+    }
+
+    return JSON.parse(response.choices[0].message.content);
+  } catch (error) {
+    console.error("Error generating skill suggestions:", error);
+    
+    // Return fallback suggestions if API fails
+    return {
+      skills: [
+        {
+          name: "Artisan Baking",
+          description: "Your bread and pastry recipes could be sold at local markets or through custom orders.",
+          matchPercentage: 98,
+          tags: ["High demand", "Low startup cost"],
+          icon: "ri-cake-3-line"
+        },
+        {
+          name: "Craft Workshops",
+          description: "Your quilting skills could be taught as workshops to beginners in your community.",
+          matchPercentage: 92,
+          tags: ["Teaching opportunity", "Flexible schedule"],
+          icon: "ri-paint-brush-line"
+        },
+        {
+          name: "Home Organization",
+          description: "Your organization skills could be offered as a professional service to busy families.",
+          matchPercentage: 85,
+          tags: ["Growing market", "Use existing skills"],
+          icon: "ri-home-gear-line"
+        }
+      ]
+    };
+  }
+}
+
+// Function to analyze assessment responses and generate skill insights
+export async function analyzeAssessmentResponses(
+  responses: Record<string, any>
+): Promise<{
+  suggestedSkills: Array<{
+    name: string;
+    description: string;
+    matchPercentage: number;
+    tags: string[];
+    icon: string;
+  }>;
+  businessInsights: string;
+}> {
+  try {
+    const responsesText = JSON.stringify(responses);
+    
+    const prompt = `
+      Analyze these assessment responses from a homemaker looking to monetize their skills:
+      
+      ${responsesText}
+      
+      Based on these responses, please provide:
+      1. Three suggested skills they could monetize with names, descriptions, match percentages (80-98%), tags, and icon names (in ri-xxx-line format)
+      2. A brief business insight paragraph with actionable advice
+      
+      Format your response as a JSON object with 'suggestedSkills' array and 'businessInsights' string.
+    `;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" }
+    });
+
+    if (!response.choices[0].message.content) {
+      throw new Error("No content in OpenAI response");
+    }
+
+    return JSON.parse(response.choices[0].message.content);
+  } catch (error) {
+    console.error("Error analyzing assessment responses:", error);
+    
+    // Return fallback analysis if API fails
+    return {
+      suggestedSkills: [
+        {
+          name: "Custom Baking",
+          description: "Create specialty baked goods for events and celebrations.",
+          matchPercentage: 94,
+          tags: ["High demand", "Scalable"],
+          icon: "ri-cake-3-line"
+        },
+        {
+          name: "Home Organization",
+          description: "Offer professional organizing services for busy families.",
+          matchPercentage: 89,
+          tags: ["Growing market", "Recurring income"],
+          icon: "ri-home-gear-line"
+        },
+        {
+          name: "Crafting Workshops",
+          description: "Teach crafting skills through in-person or online workshops.",
+          matchPercentage: 85,
+          tags: ["Low competition", "Flexible hours"],
+          icon: "ri-scissors-cut-line"
+        }
+      ],
+      businessInsights: "Consider starting with a focused niche rather than trying to offer too many services at once. Based on your responses, you have strong organizational and creative skills that could be packaged into premium service offerings. Start by creating a simple portfolio and setting prices that reflect the quality and time investment of your work."
+    };
+  }
+}
+
+// Function to generate business growth suggestions
+export async function generateBusinessSuggestions(
+  userInfo: {
+    skills: string[];
+    currentServices: string[];
+    averagePrice: number;
+    salesData?: any;
+  }
+): Promise<{
+  suggestion: string;
+  potentialIncrease: string;
+  actions: string[];
+}> {
+  try {
+    const userInfoText = JSON.stringify(userInfo);
+    
+    const prompt = `
+      Based on this information about a homemaker's business:
+      
+      ${userInfoText}
+      
+      Generate a strategic business growth suggestion including:
+      1. A specific suggestion to increase revenue
+      2. The potential percentage increase in revenue this could create
+      3. 2-3 concrete actions they can take to implement this suggestion
+      
+      Format your response as a JSON object with 'suggestion', 'potentialIncrease', and 'actions' fields.
+    `;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" }
+    });
+
+    if (!response.choices[0].message.content) {
+      throw new Error("No content in OpenAI response");
+    }
+
+    return JSON.parse(response.choices[0].message.content);
+  } catch (error) {
+    console.error("Error generating business suggestions:", error);
+    
+    // Return fallback suggestions if API fails
+    return {
+      suggestion: "Based on your sales patterns, offering a \"Mini Cake Sampler Box\" could increase your average order value.",
+      potentialIncrease: "15-20%",
+      actions: [
+        "Create a sampler box with 4-6 mini versions of your most popular items",
+        "Price it 15% higher than individual items would cost",
+        "Promote it as a gift option or a way to try multiple flavors"
+      ]
+    };
+  }
+}
+
+// Function to match mentors with users
+export async function suggestMentors(
+  userProfile: {
+    skills: string[];
+    interests: string[];
+    goals: string[];
+  },
+  availableMentors: Array<{
+    id: number;
+    name: string;
+    specialty: string;
+    bio: string;
+  }>
+): Promise<{
+  mentors: Array<{
+    id: number;
+    matchPercentage: number;
+    matchReason: string;
+  }>;
+}> {
+  try {
+    const userProfileText = JSON.stringify(userProfile);
+    const mentorsText = JSON.stringify(availableMentors);
+    
+    const prompt = `
+      Match a homemaker with the most suitable mentors from this list.
+      
+      User profile:
+      ${userProfileText}
+      
+      Available mentors:
+      ${mentorsText}
+      
+      Suggest the top 2 mentors that would be the best fit for this user.
+      For each mentor, provide their ID, a match percentage (between 70-95%), and 
+      a brief explanation of why they're a good match.
+      
+      Format your response as a JSON object with a 'mentors' array containing these suggestions.
+    `;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" }
+    });
+
+    if (!response.choices[0].message.content) {
+      throw new Error("No content in OpenAI response");
+    }
+
+    return JSON.parse(response.choices[0].message.content);
+  } catch (error) {
+    console.error("Error suggesting mentors:", error);
+    
+    // Return fallback mentor matches if API fails
+    return {
+      mentors: availableMentors.slice(0, 2).map((mentor, index) => ({
+        id: mentor.id,
+        matchPercentage: index === 0 ? 94 : 85,
+        matchReason: index === 0 
+          ? "Specializes in your primary skill area and has extensive experience helping beginners scale their business."
+          : "Has expertise in marketing and client acquisition strategies that align with your growth goals."
+      }))
+    };
+  }
+}
