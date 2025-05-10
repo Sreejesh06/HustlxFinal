@@ -137,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setShowSignUpModal(false);
       toast({
         title: "Registration successful",
-        description: `Welcome to EmpowerHer, ${data.user.username}!`,
+        description: `Welcome to Hustlx, ${data.user.username}!`,
       });
     } catch (error) {
       toast({

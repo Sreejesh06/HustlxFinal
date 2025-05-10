@@ -80,7 +80,7 @@ const SignUpModal = () => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
           <DialogTitle className="text-2xl font-bold font-heading mb-2">
-            Join EmpowerHer
+            Join Hustlx
           </DialogTitle>
           <DialogDescription>
             Create your account to get started

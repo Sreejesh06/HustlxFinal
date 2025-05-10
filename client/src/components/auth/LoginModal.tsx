@@ -70,7 +70,7 @@ const LoginModal = () => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
           <DialogTitle className="text-2xl font-bold font-heading mb-2">
-            Log In to EmpowerHer
+            Log In to Hustlx
           </DialogTitle>
           <DialogDescription>
             Enter your credentials to access your account
