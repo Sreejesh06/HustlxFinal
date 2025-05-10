@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital@0;1&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 20 14.3% 4.1%;
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14.3% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
+  --primary: 280 61% 47%;  /* #8e44ad (purple) */
+  --primary-light: 280 44% 55%; /* #a55ebd */
+  --primary-dark: 280 52% 36%; /* #6c3382 */
+  --primary-foreground: 211 100% 99%;
+  --secondary: 168 74% 29%; /* #16a085 (teal) */
+  --secondary-light: 168 76% 36%; /* #1abc9c */
+  --secondary-dark: 168 74% 25%; /* #108069 */
+  --secondary-foreground: 24 9.8% 10%;
+  --accent: 38 90% 50%; /* #f39c12 (orange) */
+  --accent-light: 40 94% 58%; /* #f9b42d */
+  --accent-dark: 38 89% 45%; /* #d68910 */
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 20 14.3% 4.1%;
+  --radius: 0.5rem;
+  
+  /* Chart colors */
+  --chart-1: 280 61% 47%;
+  --chart-2: 168 74% 29%;
+  --chart-3: 38 90% 50%;
+  --chart-4: 356 75% 53%;
+  --chart-5: 199 89% 48%;
+  
+  /* Additional colors */
+  --success: 134 61% 41%;
+  --error: 354 70% 54%;
+  --warning: 45 93% 47%;
+  --info: 189 78% 41%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 280 61% 47%;
+  --primary-light: 280 44% 55%;
+  --primary-dark: 280 52% 36%;
+  --primary-foreground: 211 100% 99%;
+  --secondary: 168 74% 29%;
+  --secondary-light: 168 76% 36%;
+  --secondary-dark: 168 74% 25%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 38 90% 50%;
+  --accent-light: 40 94% 58%;
+  --accent-dark: 38 89% 45%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+  
+  /* Chart colors */
+  --chart-1: 280 61% 47%;
+  --chart-2: 168 74% 29%;
+  --chart-3: 38 90% 50%;
+  --chart-4: 356 75% 53%;
+  --chart-5: 199 89% 48%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+  
+  .quote {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .skill-badge {
+    @apply transition-transform hover:scale-105;
+  }
+  
+  .custom-shadow {
+    @apply shadow-[0_4px_6px_rgba(0,0,0,0.07),_0_1px_3px_rgba(0,0,0,0.08)];
+  }
+  
+  .step-active {
+    @apply bg-primary text-white;
+  }
+  
+  .step-inactive {
+    @apply bg-gray-200 text-gray-600;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
