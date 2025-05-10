@@ -115,20 +115,18 @@ export default function CreateListing() {
   const createListingMutation = useMutation({
     mutationFn: async (data: CreateListingFormValues) => {
       // First, create the listing
-      const response = await apiRequest("/api/listings", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest("POST", "/api/listings", data);
+      const responseData = await response.json();
       
       // If files were uploaded, associate them with the listing
-      if (uploadedFiles.length > 0 && response.id) {
+      if (uploadedFiles.length > 0 && responseData.id) {
         const uploadPromises = uploadedFiles.map(file => 
-          uploadFile(file, "listing", response.id)
+          uploadFile(file, "listing", undefined, responseData.id)
         );
         await Promise.all(uploadPromises);
       }
       
-      return response;
+      return responseData;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["/api/listings"] });
@@ -136,7 +134,7 @@ export default function CreateListing() {
         title: "Listing created successfully",
         description: "Your listing is now live in the marketplace",
       });
-      navigate(`/listing/${data.id}`);
+      setLocation(`/listing/${data.id}`);
     },
     onError: (error: Error) => {
       toast({
@@ -609,7 +607,7 @@ export default function CreateListing() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => setLocation("/dashboard")}
                   disabled={createListingMutation.isPending}
                 >
                   Cancel
