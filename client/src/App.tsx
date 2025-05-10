@@ -14,6 +14,8 @@ const ListingDetail = React.lazy(() => import("./pages/ListingDetail"));
 const CreateListing = React.lazy(() => import("./pages/CreateListing"));
 const HomemakerProfile = React.lazy(() => import("./pages/HomemakerProfile"));
 const CustomerProfile = React.lazy(() => import("./pages/CustomerProfile"));
+const About = React.lazy(() => import("./pages/About"));
+const SuccessStories = React.lazy(() => import("./pages/SuccessStories"));
 // Import components
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -43,6 +45,8 @@ function Router() {
             <Route path="/create-listing" component={CreateListing} />
             <Route path="/homemaker/:id" component={HomemakerProfile} />
             <Route path="/customer/:id" component={CustomerProfile} />
+            <Route path="/about" component={About} />
+            <Route path="/success-stories" component={SuccessStories} />
             <Route component={NotFound} />
           </Switch>
         </Suspense>

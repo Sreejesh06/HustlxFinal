@@ -43,8 +43,12 @@ const Header = () => {
           <Link href="/skill-verification" className={`hover:text-primary transition font-medium ${location === "/skill-verification" ? "text-primary" : ""}`}>
             Skill Verification
           </Link>
-          <a href="#success-stories" className="hover:text-primary transition font-medium">Success Stories</a>
-          <a href="#about" className="hover:text-primary transition font-medium">About</a>
+          <Link href="/success-stories" className={`hover:text-primary transition font-medium ${location === "/success-stories" ? "text-primary" : ""}`}>
+            Success Stories
+          </Link>
+          <Link href="/about" className={`hover:text-primary transition font-medium ${location === "/about" ? "text-primary" : ""}`}>
+            About
+          </Link>
         </div>
         
         <div className="flex items-center space-x-4">
@@ -145,20 +149,20 @@ const Header = () => {
             >
               Skill Verification
             </Link>
-            <a 
-              href="#success-stories"
-              className="px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100"
+            <Link 
+              href="/success-stories"
+              className={`px-3 py-2 rounded-md ${location === "/success-stories" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Success Stories
-            </a>
-            <a 
-              href="#about"
-              className="px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100"
+            </Link>
+            <Link 
+              href="/about"
+              className={`px-3 py-2 rounded-md ${location === "/about" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               About
-            </a>
+            </Link>
             {!isAuthenticated && (
               <Button
                 onClick={() => {
