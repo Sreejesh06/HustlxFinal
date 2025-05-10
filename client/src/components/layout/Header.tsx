@@ -34,14 +34,14 @@ const Header = () => {
         </div>
         
         <div className="hidden md:flex items-center space-x-8 text-gray-700">
-          <Link href="/">
-            <a className={`hover:text-primary transition font-medium ${location === "/" ? "text-primary" : ""}`}>Home</a>
+          <Link href="/" className={`hover:text-primary transition font-medium ${location === "/" ? "text-primary" : ""}`}>
+            Home
           </Link>
-          <Link href="/marketplace">
-            <a className={`hover:text-primary transition font-medium ${location === "/marketplace" ? "text-primary" : ""}`}>Browse Services</a>
+          <Link href="/marketplace" className={`hover:text-primary transition font-medium ${location === "/marketplace" ? "text-primary" : ""}`}>
+            Browse Services
           </Link>
-          <Link href="/skill-verification">
-            <a className={`hover:text-primary transition font-medium ${location === "/skill-verification" ? "text-primary" : ""}`}>Skill Verification</a>
+          <Link href="/skill-verification" className={`hover:text-primary transition font-medium ${location === "/skill-verification" ? "text-primary" : ""}`}>
+            Skill Verification
           </Link>
           <a href="#success-stories" className="hover:text-primary transition font-medium">Success Stories</a>
           <a href="#about" className="hover:text-primary transition font-medium">About</a>
@@ -124,29 +124,26 @@ const Header = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white pb-4 px-4">
           <div className="flex flex-col space-y-3">
-            <Link href="/">
-              <a 
-                className={`px-3 py-2 rounded-md ${location === "/" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Home
-              </a>
+            <Link 
+              href="/"
+              className={`px-3 py-2 rounded-md ${location === "/" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
             </Link>
-            <Link href="/marketplace">
-              <a 
-                className={`px-3 py-2 rounded-md ${location === "/marketplace" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Browse Services
-              </a>
+            <Link 
+              href="/marketplace"
+              className={`px-3 py-2 rounded-md ${location === "/marketplace" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Browse Services
             </Link>
-            <Link href="/skill-verification">
-              <a 
-                className={`px-3 py-2 rounded-md ${location === "/skill-verification" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Skill Verification
-              </a>
+            <Link 
+              href="/skill-verification"
+              className={`px-3 py-2 rounded-md ${location === "/skill-verification" ? "bg-primary-light text-white" : "text-gray-700 hover:bg-gray-100"}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Skill Verification
             </Link>
             <a 
               href="#success-stories"
