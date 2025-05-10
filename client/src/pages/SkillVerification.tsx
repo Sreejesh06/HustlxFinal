@@ -57,7 +57,7 @@ export default function SkillVerification() {
   
   // Create skill mutation
   const createSkillMutation = useMutation({
-    mutationFn: (data: { name: string; category: string }) => {
+    mutationFn: (data: { name: string; category: string; level: number; isVerified: boolean }) => {
       return apiRequest("POST", "/api/skills", data);
     },
     onSuccess: (data) => {
@@ -92,6 +92,8 @@ export default function SkillVerification() {
     createSkillMutation.mutate({
       name: skillName,
       category: skillCategory,
+      level: 1, // Set initial level to 1 (beginner), will be updated by verification
+      isVerified: false // Explicitly set to false
     });
   };
   
@@ -147,7 +149,7 @@ export default function SkillVerification() {
   return (
     <>
       <Helmet>
-        <title>Skill Verification | EmpowerHer</title>
+        <title>Skill Verification | Hustlx</title>
         <meta name="description" content="Verify your homemaking skills with our AI-powered assessment system to build credibility and attract more customers." />
       </Helmet>
       
