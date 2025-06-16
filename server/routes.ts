@@ -23,6 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth Routes
   app.post("/api/auth/register", async (req: Request, res: Response) => {
     try {
+      console.log("Registration attempt:", req.body);
       const userData = insertUserSchema.parse(req.body);
       
       // Check if user already exists
@@ -60,10 +61,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         token
       });
     } catch (error) {
+      console.error("Registration error:", error);
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid input data", errors: error.errors });
+        return res.status(400).json({ 
+          message: "Invalid input data", 
+          errors: error.errors 
+        });
       }
-      res.status(500).json({ message: "Server error during registration" });
+      // More detailed error message
+      res.status(500).json({ 
+        message: "Server error during registration",
+        error: error instanceof Error ? error.message : "Unknown error" 
+      });
     }
   });
   
@@ -139,7 +148,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "User not found" });
       }
       
-      // Return public user info without password
       const { password, email, phone, ...publicUserInfo } = user;
       res.json(publicUserInfo);
     } catch (error) {
@@ -154,7 +162,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ message: "Not authenticated" });
       }
       
-      // Don't allow role or password changes through this endpoint
       const { role, password, ...updateData } = req.body;
       
       const updatedUser = await storage.updateUser(userId, updateData);

@@ -184,14 +184,21 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getFeaturedListings(limit = 6): Promise<Listing[]> {
-    return db
-      .select()
-      .from(listings)
-      .where(and(
-        eq(listings.status, "active"),
-        eq(listings.isFeatured, true)
-      ))
-      .limit(limit);
+    try {
+      const result = await db
+        .select()
+        .from(listings)
+        .where(and(
+          eq(listings.status, "active"),
+          eq(listings.isFeatured, true)
+        ))
+        .limit(limit);
+      return result;
+    } catch (error) {
+      console.error("Error fetching featured listings:", error);
+      // Return empty array instead of throwing error
+      return [];
+    }
   }
   
   async createListing(listing: InsertListing): Promise<Listing> {
